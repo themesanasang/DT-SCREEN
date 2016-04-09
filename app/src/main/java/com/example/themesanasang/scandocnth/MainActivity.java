@@ -168,10 +168,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnListPatient:
                 fragment = PatientFragment.newInstance(username);
                 break;
-            /*case R.id.btnScreen:
-                fragmentClass = ScreenFragment.class;
+            case R.id.btnScreen:
+                fragment = ScreenFragment.newInstance(username);
                 break;
-            case R.id.btnUploadData:
+            /*case R.id.btnUploadData:
                 fragmentClass = UploadDataFragment.class;
                 break;
             case R.id.btnProfile:

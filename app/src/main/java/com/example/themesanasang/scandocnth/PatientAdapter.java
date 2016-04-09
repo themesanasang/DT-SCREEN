@@ -44,7 +44,7 @@ public class PatientAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.list_patient_item, parent, false);
 
         TextView textView1 = (TextView)view.findViewById(R.id.p_cid);
-        textView1.setText("CID: "+mData.get(position).get("cid").toString());
+        textView1.setText("รหัสบัตรประชาชน: "+mData.get(position).get("cid").toString());
         //textView1.setText("CID: "+mData.get(position).get("cid").toString());
 
         TextView textView2 = (TextView)view.findViewById(R.id.p_name);

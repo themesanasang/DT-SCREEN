@@ -7,8 +7,16 @@
     <string name="txtUsername">ชื่อผู้ใช้งาน</string>
     <string name="txtPassword">รหัสผ่าน</string>
     <string name="btnLogin">เข้าสู่ระบบ</string>
-
     <!-- footer login -->
     <string name="createBy">©2016 by themesanasang</string>
+
+    <!-- from screen -->
+    <string name="txtFullname">ชื่อ-สกุล</string>
+    <string name="txtCID">รหัสบัตรประชาชน</string>
+    <string name="txtAddress">ที่อยู่</string>
+
+
+    <!-- Btn Save -->
+    <string name="btnSave">บันทึก</string>
 
 </resources>
