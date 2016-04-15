@@ -17,9 +17,5 @@
             android:id="@+id/btnProfile"
             android:icon="@drawable/ic_account_box"
             android:title="ข้อมูลส่วนตัว"/>
-        <item
-            android:id="@+id/btnLogout"
-            android:icon="@drawable/ic_action_lock_open"
-            android:title="ออกจากระบบ"/>
     </group>
 </menu>

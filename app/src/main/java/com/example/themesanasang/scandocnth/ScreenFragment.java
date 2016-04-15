@@ -2,9 +2,12 @@ package com.example.themesanasang.scandocnth;
 
 
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+
+import android.graphics.Bitmap;
 
 
 /**
@@ -46,7 +53,8 @@ public class ScreenFragment extends Fragment {
     public static final int MEDIA_TYPE_VIDEO = 2;
 
     private Uri fileUri;
-    private Button btnCapturePicture, btnRecordVideo;
+    private Button btnRecordVideo;
+    private ImageView logo_patient, btnCapturePicture;
 
     public static ScreenFragment newInstance(String username) {
         ScreenFragment fragment = new ScreenFragment();
@@ -67,7 +75,9 @@ public class ScreenFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_screen, container, false);
 
-        btnCapturePicture = (Button) rootView.findViewById(R.id.btnCapturePicture);
+        logo_patient = (ImageView) rootView.findViewById(R.id.logo_patient);
+
+        btnCapturePicture = (ImageView) rootView.findViewById(R.id.btnCapturePicture);
         btnCapturePicture.setOnClickListener(new ButtonClick());
 
         // Checking camera availability
@@ -128,17 +138,58 @@ public class ScreenFragment extends Fragment {
 
     }
 
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.i("Check", "onActivityCreated");
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Toast.makeText(getActivity(),
-                "OK DATA", Toast.LENGTH_SHORT)
-                .show();
+        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                // successfully captured the image
+                // launching upload activity
+                //launchUploadActivity(true);
+
+                Toast.makeText(getActivity(),
+                        "OK image capture", Toast.LENGTH_SHORT)
+                        .show();
+
+                logo_patient.setImageURI(fileUri);
+
+
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+
+                // user cancelled Image capture
+                Toast.makeText(getActivity(),
+                        "User cancelled image capture", Toast.LENGTH_SHORT)
+                        .show();
+
+            } else {
+                // failed to capture image
+                Toast.makeText(getActivity(),
+                        "Sorry! Failed to capture image", Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+        } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                // video successfully recorded
+                // launching upload activity
+                //launchUploadActivity(false);
+
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+
+                // user cancelled recording
+                Toast.makeText(getActivity(),
+                        "User cancelled video recording", Toast.LENGTH_SHORT)
+                        .show();
+
+            } else {
+                // failed to record video
+                Toast.makeText(getActivity(),
+                        "Sorry! Failed to record video", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
     }
 
 
@@ -191,6 +242,7 @@ public class ScreenFragment extends Fragment {
     public void onStop() {
         super.onStop();
     }
+
 
 
 }

@@ -14,26 +14,24 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toast;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spannable;
+import android.view.View;
 
-import butterknife.Bind;
+import org.json.JSONException;
+
 import butterknife.ButterKnife;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private Session session;
 
@@ -46,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
     CoordinatorLayout rootLayout;
 
     private NavigationView navigationView;
-    private  String userid;
+    private  String user_id;
     private  String username;
     private  String nameFull;
+
+    FragmentManager fm = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +76,23 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(navigationView);
 
         Intent myIntent = getIntent();
-        if (myIntent.hasExtra("userid")){
-            userid = myIntent.getStringExtra("userid");
+        if (myIntent.hasExtra("user_id")){
+            user_id = myIntent.getStringExtra("user_id");
             username = myIntent.getStringExtra("username");
             nameFull = myIntent.getStringExtra("name");
         }
 
-        PatientFragment fragment = PatientFragment.newInstance(username);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        if (savedInstanceState == null) {
+            PatientFragment fragment = PatientFragment.newInstance(username);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
+        }
+
+        if(user_id == null){
+            logoutUser();
+        }
 
     }
 
@@ -162,14 +170,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem menuItem) {
 
-        Fragment fragment = null;
-        Class fragmentClass;
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
         switch(menuItem.getItemId()) {
             case R.id.btnListPatient:
-                fragment = PatientFragment.newInstance(username);
+                PatientFragment Patient = PatientFragment.newInstance(username);
+                transaction.replace(R.id.flContent, Patient);
+                transaction.addToBackStack(null);
+                transaction.commit();
                 break;
             case R.id.btnScreen:
-                fragment = ScreenFragment.newInstance(username);
+                ScreenFragment Screen = ScreenFragment.newInstance(username);
+                transaction.replace(R.id.flContent, Screen);
+                transaction.addToBackStack(null);
+                transaction.commit();
                 break;
             /*case R.id.btnUploadData:
                 fragmentClass = UploadDataFragment.class;
@@ -177,15 +191,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnProfile:
                 fragmentClass = ProfileFragment.class;
                 break;*/
-            case R.id.btnLogout:
-                logoutUser();
             default:
-                fragment = PatientFragment.newInstance(username);
+                PatientFragment DefaultFragment = PatientFragment.newInstance(username);
+                transaction.replace(R.id.flContent, DefaultFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
         }
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -194,8 +206,6 @@ public class MainActivity extends AppCompatActivity {
         // Close the navigation drawer
         drawerLayout.closeDrawers();
     }
-
-
 
 
     private void logoutUser() {

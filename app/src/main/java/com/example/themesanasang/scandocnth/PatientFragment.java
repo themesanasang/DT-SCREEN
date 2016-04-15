@@ -2,6 +2,7 @@ package com.example.themesanasang.scandocnth;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -63,25 +65,15 @@ public class PatientFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_patient, container, false);
 
-        //uname = getArguments().getString("username", "");
-
         list = (ListView)rootView.findViewById(R.id.patient_list);
         Item_List = new ArrayList<HashMap<String, String>>();
-
-        /*String[] country = new String[] { "China", "India", "United States",
-                "Indonesia", "Brazil" };
-
-        list = (ListView)rootView.findViewById(R.id.patient_list);
-        adapter = new PatientAdapter(getActivity(), country, country);
-        // Binds the Adapter to the ListView
-        list.setAdapter(adapter);*/
-
 
         return rootView;
     }
@@ -92,8 +84,10 @@ public class PatientFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        uname = getArguments().getString("username", "");
-        ReadDataFromDB(uname);
+        if (savedInstanceState != null) {
+            uname = getArguments().getString("username", "");
+            ReadDataFromDB(uname);
+        }
     }
 
     private void ReadDataFromDB(final String uname) {
@@ -140,5 +134,27 @@ public class PatientFragment extends Fragment {
 
         AppController.getInstance().addToRequestQueue(jreq, "json_obj_req");
     }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            uname = getArguments().getString("username", "");
+            ReadDataFromDB(uname);
+        } else {
+            uname = savedInstanceState.getString("uname");
+            ReadDataFromDB(uname);
+        }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("uname", uname);
+    }
+
 
 }
