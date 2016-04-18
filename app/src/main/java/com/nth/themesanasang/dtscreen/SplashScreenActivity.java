@@ -1,15 +1,14 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
+
+import com.nth.themesanasang.dtscreen.R;
 
 /**
  * Created by themesanasang on 28/3/59.

@@ -5,15 +5,16 @@
     android:paddingLeft="16dp">
 
 
-    <ImageView
+    <com.nth.themesanasang.dtscreen.CustomRoundedImageView
         android:id="@+id/user_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_account_circle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:paddingTop="8dp"
         android:layout_alignParentLeft="true"
-        android:paddingTop="8dp" />
+        android:background="@drawable/ic_account_circle"/>
 
-    <com.example.themesanasang.scandocnth.CustomTextView
+    <com.nth.themesanasang.dtscreen.CustomTextView
         android:id="@+id/p_cid"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -24,7 +25,7 @@
         android:paddingLeft="16dp"
         android:textColor="@color/red"/>
 
-    <com.example.themesanasang.scandocnth.CustomTextView
+    <com.nth.themesanasang.dtscreen.CustomTextView
         android:id="@+id/p_name"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -35,7 +36,7 @@
         android:paddingLeft="16dp"
         android:textColor="@color/black"/>
 
-    <com.example.themesanasang.scandocnth.CustomTextView
+    <com.nth.themesanasang.dtscreen.CustomTextView
         android:id="@+id/p_day"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -46,7 +47,7 @@
         android:paddingLeft="16dp"
         android:textColor="@color/black"/>
 
-    <com.example.themesanasang.scandocnth.CustomTextView
+    <com.nth.themesanasang.dtscreen.CustomTextView
         android:id="@+id/p_by"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"

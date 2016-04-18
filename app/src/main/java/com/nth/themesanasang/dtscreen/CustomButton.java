@@ -1,28 +1,27 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.widget.Button;
 
 /**
  * Created by themesanasang on 6/4/59.
  */
-
-public class CustomTextView extends TextView {
-    public CustomTextView(Context context) {
+public class CustomButton extends Button {
+    public CustomButton(Context context) {
         super(context);
         initTypFace(null);
     }
 
-    public CustomTextView(Context context, AttributeSet attrs) {
+    public CustomButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         initTypFace(attrs);
     }
 
-    public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initTypFace(attrs);
     }

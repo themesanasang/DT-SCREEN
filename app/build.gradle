@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.example.themesanasang.scandocnth"
+        applicationId "com.nth.themesanasang.dtscreen"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

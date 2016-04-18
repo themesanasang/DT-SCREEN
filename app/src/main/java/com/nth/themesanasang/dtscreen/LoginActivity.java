@@ -1,23 +1,21 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.nth.themesanasang.dtscreen.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +25,6 @@ import butterknife.Bind;
 
 import android.graphics.Typeface;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

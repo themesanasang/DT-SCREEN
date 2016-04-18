@@ -1,30 +1,19 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.nth.themesanasang.dtscreen.R;
 
 
 import java.util.ArrayList;
@@ -40,7 +29,7 @@ import org.json.JSONObject;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PatientFragment extends Fragment {
+public class PatientFragment extends Fragment implements OnBackPressed {
 
     private String username;
     private String uname;
@@ -85,7 +74,7 @@ public class PatientFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            uname = getArguments().getString("username", "");
+            uname = username; //getArguments().getString("username", "");
             ReadDataFromDB(uname);
         }
     }
@@ -104,6 +93,7 @@ public class PatientFragment extends Fragment {
                         HashMap<String, String> item = new HashMap<String, String>();
                         item.put("cid", jobj.getString("cid"));
                         item.put("fullname", jobj.getString("fullname"));
+                        item.put("pic_logo", jobj.getString("pic_logo"));
                         item.put("screen_by", jobj.getString("screen_by"));
                         item.put("regdate", jobj.getString("regdate"));
 
@@ -153,7 +143,13 @@ public class PatientFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
         outState.putString("uname", uname);
+    }
+
+    @Override
+    public void onBackPressed(){
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
 

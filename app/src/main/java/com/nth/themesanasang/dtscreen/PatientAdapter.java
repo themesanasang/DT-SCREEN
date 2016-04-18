@@ -1,19 +1,28 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 /**
  * Created by themesanasang on 8/4/59.
  */
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+
+import com.nth.themesanasang.dtscreen.R;
+
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 public class PatientAdapter extends BaseAdapter {
     Context mContext;
@@ -42,6 +51,22 @@ public class PatientAdapter extends BaseAdapter {
 
         if(view == null)
             view = mInflater.inflate(R.layout.list_patient_item, parent, false);
+
+
+
+
+        if(mData.get(position).get("pic_logo").toString() != "nodata") {
+            byte[] decodedString = Base64.decode(mData.get(position).get("pic_logo").toString(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            ImageView pic_logo = (ImageView) view.findViewById(R.id.user_icon);
+
+            Log.d("Msg = ", String.valueOf(decodedString.length));
+
+            if(decodedString.length > 10000) {
+                pic_logo.setImageBitmap(decodedByte);
+            }
+        }
 
         TextView textView1 = (TextView)view.findViewById(R.id.p_cid);
         textView1.setText("รหัสบัตรประชาชน: "+mData.get(position).get("cid").toString());

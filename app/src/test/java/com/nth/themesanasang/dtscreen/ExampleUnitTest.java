@@ -1,4 +1,4 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 import org.junit.Test;
 

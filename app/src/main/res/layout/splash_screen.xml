@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.themesanasang.scandocnth.CustomTextView
+    <com.nth.themesanasang.dtscreen.CustomTextView
         android:layout_centerInParent="true"
         android:textColor="@color/primary_blue"
         android:textStyle="bold"

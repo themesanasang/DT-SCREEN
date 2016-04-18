@@ -1,4 +1,4 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -7,7 +7,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,16 +16,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spannable;
-import android.view.View;
 
-import org.json.JSONException;
+import com.nth.themesanasang.dtscreen.R;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private  String username;
     private  String nameFull;
 
-    FragmentManager fm = getSupportFragmentManager();
+    private int mCurrentSelectedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +80,14 @@ public class MainActivity extends AppCompatActivity {
             nameFull = myIntent.getStringExtra("name");
         }
 
-        navigationView.getMenu().getItem(0).setChecked(true);
-
         if (savedInstanceState == null) {
+            navigationView.getMenu().getItem(0).setChecked(true);
             PatientFragment fragment = PatientFragment.newInstance(username);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
+        }else{
+            mCurrentSelectedPosition = savedInstanceState.getInt("home");
+            navigationView.getMenu().getItem(mCurrentSelectedPosition).setChecked(true);
         }
 
         if(user_id == null){
@@ -174,12 +174,14 @@ public class MainActivity extends AppCompatActivity {
 
         switch(menuItem.getItemId()) {
             case R.id.btnListPatient:
+                mCurrentSelectedPosition = 0;
                 PatientFragment Patient = PatientFragment.newInstance(username);
                 transaction.replace(R.id.flContent, Patient);
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
             case R.id.btnScreen:
+                mCurrentSelectedPosition = 1;
                 ScreenFragment Screen = ScreenFragment.newInstance(username);
                 transaction.replace(R.id.flContent, Screen);
                 transaction.addToBackStack(null);
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = ProfileFragment.class;
                 break;*/
             default:
+                mCurrentSelectedPosition = 0;
                 PatientFragment DefaultFragment = PatientFragment.newInstance(username);
                 transaction.replace(R.id.flContent, DefaultFragment);
                 transaction.addToBackStack(null);
@@ -205,6 +208,52 @@ public class MainActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         drawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Log.d("Msg = ", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("ออกจากระบบ");
+            //dialog.setIcon(R.drawable.ic_launcher);
+            dialog.setCancelable(true);
+            dialog.setMessage("คุณต้องการออกจากระบบ?");
+            dialog.setPositiveButton("ใช่", new OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            dialog.setNegativeButton("ไม่", new OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+
+                    navigationView.getMenu().getItem(0).setChecked(true);
+                    PatientFragment fragment = PatientFragment.newInstance(username);
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
+                }
+            });
+
+            dialog.show();
+        }
+    }
+
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("home", mCurrentSelectedPosition);
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mCurrentSelectedPosition = savedInstanceState.getInt("home", 0);
+        Menu menu = navigationView.getMenu();
+        menu.getItem(mCurrentSelectedPosition).setChecked(true);
     }
 
 

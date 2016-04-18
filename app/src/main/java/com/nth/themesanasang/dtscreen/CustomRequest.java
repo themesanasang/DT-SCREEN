@@ -1,4 +1,4 @@
-package com.example.themesanasang.scandocnth;
+package com.nth.themesanasang.dtscreen;
 
 /**
  * Created by themesanasang on 9/4/59.
