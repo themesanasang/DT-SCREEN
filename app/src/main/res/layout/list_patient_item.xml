@@ -5,7 +5,16 @@
     android:paddingLeft="16dp">
 
 
-    <com.nth.themesanasang.dtscreen.CustomRoundedImageView
+    <!--<com.nth.themesanasang.dtscreen.CustomRoundedImageView
+        android:id="@+id/user_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:paddingTop="8dp"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/ic_account_circle"/>-->
+
+    <ImageView
         android:id="@+id/user_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"

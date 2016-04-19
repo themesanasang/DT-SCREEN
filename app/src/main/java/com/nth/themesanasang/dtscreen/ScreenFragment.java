@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Button;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -184,9 +186,9 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             Log.d("Tag ", "Post Data To Server");
 
 
-            TextView txt_cid = (TextView) rootView.findViewById(R.id.s_cid);
-            TextView txt_fullname = (TextView) rootView.findViewById(R.id.s_fullname);
-            TextView txt_address = (TextView) rootView.findViewById(R.id.s_address);
+            final TextView txt_cid = (TextView) rootView.findViewById(R.id.s_cid);
+            final TextView txt_fullname = (TextView) rootView.findViewById(R.id.s_fullname);
+            final TextView txt_address = (TextView) rootView.findViewById(R.id.s_address);
 
             ContentResolver musicResolver = getActivity().getContentResolver();
 
@@ -200,15 +202,13 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             pic_s_2 = "";
             pic_s_3 = "";
 
-            try {
-                if(fileUri == null){
-                    pic_logo = "";
-                }else{
-                    bitmap1 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri));
-                    pic_logo = getStringImage(bitmap1);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if(fileUri == null){
+                pic_logo = "";
+            }else{
+                //bitmap1 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri));
+                //Bitmap resized1 = Bitmap.createScaledBitmap(bitmap1,(int)(bitmap1.getWidth()*0.9), (int)(bitmap1.getHeight()*0.9), true);
+                bitmap1 = getBitmap(fileUri);
+                pic_logo = getStringImage(bitmap1);
             }
 
             try {
@@ -216,7 +216,8 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
                     pic_s_1 = "";
                 }else{
                     bitmap2 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri2));
-                    pic_s_1 = getStringImage(bitmap2);
+                    Bitmap resized2 = Bitmap.createScaledBitmap(bitmap2,(int)(bitmap2.getWidth()*0.9), (int)(bitmap2.getHeight()*0.9), true);
+                    pic_s_1 = getStringImage(resized2);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -227,7 +228,8 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
                     pic_s_2 = "";
                 }else{
                     bitmap3 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri3));
-                    pic_s_2 = getStringImage(bitmap3);
+                    Bitmap resized3 = Bitmap.createScaledBitmap(bitmap3,(int)(bitmap3.getWidth()*0.9), (int)(bitmap3.getHeight()*0.9), true);
+                    pic_s_2 = getStringImage(resized3);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -235,10 +237,11 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
 
             try {
                 if(fileUri4 == null){
-                    pic_s_2 = "";
+                    pic_s_3 = "";
                 }else{
                     bitmap4 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri4));
-                    pic_s_2 = getStringImage(bitmap4);
+                    Bitmap resized4 = Bitmap.createScaledBitmap(bitmap4,(int)(bitmap4.getWidth()*0.9), (int)(bitmap4.getHeight()*0.9), true);
+                    pic_s_3 = getStringImage(resized4);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -267,10 +270,21 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
 
                         if (keyError == "false") {
 
-                            //String dd = jObj.getString("dd");
+                            /*String dd = jObj.getString("test");
+                            Toast.makeText(getActivity(),
+                                    dd, Toast.LENGTH_LONG).show();*/
+
 
                             Toast.makeText(getActivity(),
-                                    "okkkkk", Toast.LENGTH_LONG).show();
+                                    "บันทึกข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
+
+                            logo_patient.setImageResource(R.drawable.p_user);
+                            txt_cid.setText("");
+                            txt_fullname.setText("");
+                            txt_address.setText("");
+                            //pic_1 = null;
+                            //pic_2 = null;
+                            //pic_3 = null;
 
                         } else {
                             String errorMsg = jObj.getString("error_msg");
@@ -319,6 +333,64 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
     }
 
 
+
+    private Bitmap getBitmap(Uri path) {
+
+        Uri uri = path;
+        InputStream in = null;
+        try {
+            ContentResolver mContentResolver = getActivity().getContentResolver();
+            final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
+            in = mContentResolver.openInputStream(uri);
+
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, o);
+            in.close();
+
+
+
+            int scale = 1;
+            while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
+                    IMAGE_MAX_SIZE) {
+                scale++;
+            }
+
+            Bitmap b = null;
+            in = mContentResolver.openInputStream(uri);
+            if (scale > 1) {
+                scale--;
+                // scale to max possible inSampleSize that still yields an image
+                // larger than target
+                o = new BitmapFactory.Options();
+                o.inSampleSize = scale;
+                b = BitmapFactory.decodeStream(in, null, o);
+
+                // resize to desired dimensions
+                int height = b.getHeight();
+                int width = b.getWidth();
+
+                double y = Math.sqrt(IMAGE_MAX_SIZE
+                        / (((double) width) / height));
+                double x = (y / height) * width;
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
+                        (int) y, true);
+                b.recycle();
+                b = scaledBitmap;
+
+                System.gc();
+            } else {
+                b = BitmapFactory.decodeStream(in);
+            }
+            in.close();
+
+            return b;
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
 
 
