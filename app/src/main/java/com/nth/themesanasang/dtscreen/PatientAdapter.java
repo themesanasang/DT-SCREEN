@@ -6,6 +6,7 @@ package com.nth.themesanasang.dtscreen;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import java.util.Map;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+
+import  com.mikhaellopez.circularimageview.CircularImageView;
 
 public class PatientAdapter extends BaseAdapter {
     Context mContext;
@@ -53,19 +56,23 @@ public class PatientAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.list_patient_item, parent, false);
 
 
-
+        //ImageView pic_logo = (ImageView) view.findViewById(R.id.user_icon);
+        CircularImageView pic_logo = (CircularImageView)view.findViewById(R.id.user_icon);
+        pic_logo.setBorderColor(R.color.primary_blue);
+        pic_logo.setBorderWidth(1);
+        /*circularImageView.addShadow();
+        circularImageView.setShadowRadius(15);
+        circularImageView.setShadowColor(Color.RED);*/
 
         if(mData.get(position).get("pic_logo").toString() != "nodata") {
             byte[] decodedString = Base64.decode(mData.get(position).get("pic_logo").toString(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-            ImageView pic_logo = (ImageView) view.findViewById(R.id.user_icon);
-
-            Log.d("Msg = ", String.valueOf(decodedString.length));
-
             if(decodedString.length > 10000) {
                 pic_logo.setImageBitmap(decodedByte);
             }
+        }else{
+            pic_logo.setImageResource(R.drawable.ic_account_circle);
         }
 
         TextView textView1 = (TextView)view.findViewById(R.id.p_cid);

@@ -42,6 +42,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.nth.themesanasang.dtscreen.R;
 
 import org.json.JSONException;
@@ -70,8 +71,9 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
     private String pic_logo, pic_s_1, pic_s_2, pic_s_3;
 
     private Uri fileUri, fileUri2, fileUri3, fileUri4;
-    private ImageView logo_patient, btnCapturePicture, btnCapturePicture2, btnCapturePicture3, pic_1, pic_2, pic_3;
+    private ImageView btnCapturePicture, btnCapturePicture2, btnCapturePicture3, pic_1, pic_2, pic_3;
     Button btnSaveScreen;
+    private CircularImageView logo_patient;
 
     public static ScreenFragment newInstance(String username) {
         ScreenFragment fragment = new ScreenFragment();
@@ -92,7 +94,8 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
 
         rootView = inflater.inflate(R.layout.fragment_screen, container, false);
 
-        logo_patient = (ImageView) rootView.findViewById(R.id.logo_patient);
+        //logo_patient = (ImageView) rootView.findViewById(R.id.logo_patient);
+        logo_patient = (CircularImageView)rootView.findViewById(R.id.logo_patient);
         logo_patient.setOnClickListener(new logo_patient());
 
         btnCapturePicture = (ImageView) rootView.findViewById(R.id.btnCapturePicture);
@@ -205,47 +208,42 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             if(fileUri == null){
                 pic_logo = "";
             }else{
-                //bitmap1 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri));
-                //Bitmap resized1 = Bitmap.createScaledBitmap(bitmap1,(int)(bitmap1.getWidth()*0.9), (int)(bitmap1.getHeight()*0.9), true);
+                /*try {
+                    bitmap1 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }*/
                 bitmap1 = getBitmap(fileUri);
                 pic_logo = getStringImage(bitmap1);
             }
 
-            try {
-                if(fileUri2 == null){
-                    pic_s_1 = "";
-                }else{
-                    bitmap2 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri2));
-                    Bitmap resized2 = Bitmap.createScaledBitmap(bitmap2,(int)(bitmap2.getWidth()*0.9), (int)(bitmap2.getHeight()*0.9), true);
-                    pic_s_1 = getStringImage(resized2);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if(fileUri2 == null){
+                pic_s_1 = "";
+            }else{
+                //bitmap2 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri2));
+
+                bitmap2 = getBitmap(fileUri2);
+                pic_s_1 = getStringImage(bitmap2);
             }
 
-            try {
-                if(fileUri3 == null){
-                    pic_s_2 = "";
-                }else{
-                    bitmap3 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri3));
-                    Bitmap resized3 = Bitmap.createScaledBitmap(bitmap3,(int)(bitmap3.getWidth()*0.9), (int)(bitmap3.getHeight()*0.9), true);
-                    pic_s_2 = getStringImage(resized3);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if(fileUri3 == null){
+                pic_s_2 = "";
+            }else{
+                //bitmap3 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri3));
+
+                bitmap3 = getBitmap(fileUri3);
+                pic_s_2 = getStringImage(bitmap3);
             }
 
-            try {
-                if(fileUri4 == null){
-                    pic_s_3 = "";
-                }else{
-                    bitmap4 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri4));
-                    Bitmap resized4 = Bitmap.createScaledBitmap(bitmap4,(int)(bitmap4.getWidth()*0.9), (int)(bitmap4.getHeight()*0.9), true);
-                    pic_s_3 = getStringImage(resized4);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if(fileUri4 == null){
+                pic_s_3 = "";
+            }else{
+                //bitmap4 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri4));
+
+                bitmap4 = getBitmap(fileUri4);
+                pic_s_3 = getStringImage(bitmap4);
             }
+
 
             final String create_by = uname;
             final String cid = txt_cid.getText().toString();
@@ -340,7 +338,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
         InputStream in = null;
         try {
             ContentResolver mContentResolver = getActivity().getContentResolver();
-            final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
+            final int IMAGE_MAX_SIZE = 100000;
             in = mContentResolver.openInputStream(uri);
 
             // Decode image size
@@ -348,7 +346,6 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             o.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(in, null, o);
             in.close();
-
 
 
             int scale = 1;
@@ -443,6 +440,9 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
                         .show();*/
 
                 logo_patient.setImageURI(fileUri);
+                logo_patient.setBorderColor(R.color.primary_blue);
+                logo_patient.setBorderWidth(1);
+
                 pic_1.setImageURI(fileUri2);
                 pic_2.setImageURI(fileUri3);
                 pic_3.setImageURI(fileUri4);
