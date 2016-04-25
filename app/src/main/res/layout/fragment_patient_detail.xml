@@ -1,0 +1,172 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nth.themesanasang.dtscreen.PatientDetailFragment">
+
+
+    <com.nth.themesanasang.dtscreen.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:text="รายละเอียด"
+        android:background="@drawable/text_bottom_border"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="24dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/logo_patient_edit"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:background="@drawable/p_user"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <com.nth.themesanasang.dtscreen.CustomEditText
+                    android:id="@+id/s_cid_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:hint="@string/txtCID" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <com.nth.themesanasang.dtscreen.CustomEditText
+                    android:id="@+id/s_fullname_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:hint="@string/txtFullname" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <com.nth.themesanasang.dtscreen.CustomEditText
+                    android:id="@+id/s_address_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLines="5"
+                    android:minLines="3"
+                    android:scrollbars="vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:hint="@string/txtAddress" />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/btnCapturePicture_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/c_1"/>
+
+                <ImageView
+                    android:id="@+id/btnCapturePicture2_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:src="@drawable/c_2"/>
+
+                <ImageView
+                    android:id="@+id/btnCapturePicture3_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:src="@drawable/c_3"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/pic_1_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:baseline="1dp" />
+
+                <ImageView
+                    android:id="@+id/pic_2_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:baseline="1dp" />
+
+                <ImageView
+                    android:id="@+id/pic_3_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnEditScreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:text="@string/btnEdit"
+                    android:drawableLeft="@drawable/ic_mode_edit"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnDeleteScreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/btnDelete"
+                    android:theme="@style/MyButtonDelete"
+                    android:drawableLeft="@drawable/ic_delete" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

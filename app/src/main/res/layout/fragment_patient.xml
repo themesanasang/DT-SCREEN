@@ -1,4 +1,33 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nth.themesanasang.dtscreen.PatientFragment">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.nth.themesanasang.dtscreen.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:text="คัดกรองเบื้องต้น"
+            android:background="@drawable/text_bottom_border"/>
+
+        <ListView
+            android:id="@+id/patient_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="54dp"/>
+    </FrameLayout>
+
+</LinearLayout>
+
+
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,4 +38,4 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
-</FrameLayout>
+</FrameLayout>-->

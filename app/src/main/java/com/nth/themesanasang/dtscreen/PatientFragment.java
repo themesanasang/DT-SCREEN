@@ -2,12 +2,15 @@ package com.nth.themesanasang.dtscreen;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -23,7 +26,8 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 
 
 /**
@@ -63,6 +67,26 @@ public class PatientFragment extends Fragment implements OnBackPressed {
 
         list = (ListView)rootView.findViewById(R.id.patient_list);
         Item_List = new ArrayList<HashMap<String, String>>();
+
+        list.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view,
+                                    int position, long arg3) {
+
+                Log.d("Msg Patient Item ","click:"+String.valueOf(position));
+
+                String cid = ((TextView)view.findViewById(R.id.p_cid)).getText().toString();
+                String day = ((TextView)view.findViewById(R.id.p_day)).getText().toString();
+
+                PatientDetailFragment fragment2 = PatientDetailFragment.newInstance(uname,cid,day);
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction =        fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, fragment2);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
 
         return rootView;
     }

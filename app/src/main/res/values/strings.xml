@@ -10,6 +10,15 @@
     <!-- footer login -->
     <string name="createBy">©2016 by themesanasang</string>
 
+    <!-- from search -->
+    <string name="menu_search">ค้นหา</string>
+    <string name="search_hint">ค้นหา</string>
+    <string name="search_result">ผลการค้นหา</string>
+
+    <!-- from list patient screen -->
+    <string name="listCID">รหัสบัตรประชาชน: </string>
+    <string name="listRegdate">วันที่คัดกรอง: </string>
+
     <!-- from screen -->
     <string name="txtFullname">ชื่อ-สกุล</string>
     <string name="txtCID">รหัสบัตรประชาชน</string>
@@ -18,5 +27,10 @@
 
     <!-- Btn Save -->
     <string name="btnSave">บันทึก</string>
+    <string name="btnEdit">แก้ไข</string>
+    <string name="btnDelete">ลบ</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

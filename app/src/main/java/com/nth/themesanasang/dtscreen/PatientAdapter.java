@@ -76,14 +76,14 @@ public class PatientAdapter extends BaseAdapter {
         }
 
         TextView textView1 = (TextView)view.findViewById(R.id.p_cid);
-        textView1.setText("รหัสบัตรประชาชน: "+mData.get(position).get("cid").toString());
+        textView1.setText(mData.get(position).get("cid").toString());
         //textView1.setText("CID: "+mData.get(position).get("cid").toString());
 
         TextView textView2 = (TextView)view.findViewById(R.id.p_name);
         textView2.setText("ชื่อ: "+mData.get(position).get("fullname").toString());
 
         TextView textView3 = (TextView)view.findViewById(R.id.p_day);
-        textView3.setText("วันที่คัดกรอง: "+mData.get(position).get("regdate").toString());
+        textView3.setText(mData.get(position).get("regdate").toString());
 
         TextView textView4 = (TextView)view.findViewById(R.id.p_by);
         textView4.setText("คัดกรองโดย: "+mData.get(position).get("screen_by").toString());
