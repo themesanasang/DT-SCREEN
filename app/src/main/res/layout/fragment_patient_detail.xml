@@ -129,12 +129,14 @@
                     android:id="@+id/pic_2_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:baseline="1dp" />
 
                 <ImageView
                     android:id="@+id/pic_3_edit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
 

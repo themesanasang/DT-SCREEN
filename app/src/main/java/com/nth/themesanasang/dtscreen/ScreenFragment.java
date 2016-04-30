@@ -338,7 +338,8 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
         InputStream in = null;
         try {
             ContentResolver mContentResolver = getActivity().getContentResolver();
-            final int IMAGE_MAX_SIZE = 100000;
+            //500000000 ได้
+            final int IMAGE_MAX_SIZE = 500000000;
             in = mContentResolver.openInputStream(uri);
 
             // Decode image size
@@ -440,7 +441,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
                         .show();*/
 
                 logo_patient.setImageURI(fileUri);
-                logo_patient.setBorderColor(R.color.primary_blue);
+                logo_patient.setBorderColor(R.color.iron);
                 logo_patient.setBorderWidth(1);
 
                 pic_1.setImageURI(fileUri2);
