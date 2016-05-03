@@ -70,6 +70,22 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
                 <com.nth.themesanasang.dtscreen.CustomEditText
+                    android:id="@+id/s_age_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:hint="@string/txtAGE" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <com.nth.themesanasang.dtscreen.CustomEditText
                     android:id="@+id/s_address_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,10 +166,9 @@
                     android:id="@+id/btnEditScreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:text="@string/btnEdit"
-                    android:drawableLeft="@drawable/ic_mode_edit"/>
+                    android:text="@string/btnEdit" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnDeleteScreen"
@@ -161,8 +176,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:text="@string/btnDelete"
-                    android:theme="@style/MyButtonDelete"
-                    android:drawableLeft="@drawable/ic_delete" />
+                    android:theme="@style/MyButtonDelete" />
             </LinearLayout>
 
 

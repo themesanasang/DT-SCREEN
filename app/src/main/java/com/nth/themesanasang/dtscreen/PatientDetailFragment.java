@@ -13,12 +13,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +56,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
     private ProgressDialog progressDialog;
 
-    private TextView cid, fullname, address;
+    private TextView cid, fullname, age, address;
     Button btnedit, btndelete;
 
     // Camera activity request codes
@@ -70,6 +75,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
     private String username, uname, pcid, pday, id_edit;
     View rootView;
+    EditText txtCode;
 
 
     public static PatientDetailFragment newInstance(String username, String cid, String day) {
@@ -95,6 +101,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
         cid = (TextView)rootView.findViewById(R.id.s_cid_edit);
         fullname = (TextView)rootView.findViewById(R.id.s_fullname_edit);
+        age = (TextView)rootView.findViewById(R.id.s_age_edit);
         address = (TextView)rootView.findViewById(R.id.s_address_edit);
 
         logo_patient = (CircularImageView)rootView.findViewById(R.id.logo_patient_edit);
@@ -121,6 +128,39 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
+
+        txtCode = (EditText) rootView.findViewById(R.id.s_cid_edit);
+        txtCode.addTextChangedListener( new TextWatcher() {
+            boolean isEdiging;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().replace("-", ""));
+
+                if (sb.length()> 2)
+                    sb.insert(1, "-");
+                if (sb.length()> 6)
+                    sb.insert(6, "-");
+                if (sb.length()> 12)
+                    sb.insert(12, "-");
+                if (sb.length()> 15)
+                    sb.insert(15, "-");
+                if(sb.length()> 17)
+                    sb.delete(17, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
 
         // Checking camera availability
         if (!isDeviceSupportCamera()) {
@@ -206,6 +246,132 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
         public void onClick(View v) {
             Log.d("Tag ", "Edit Data Screen ID="+id_edit);
 
+            final TextView txt_cid = (TextView) rootView.findViewById(R.id.s_cid_edit);
+            final TextView txt_fullname = (TextView) rootView.findViewById(R.id.s_fullname_edit);
+            final TextView txt_age = (TextView) rootView.findViewById(R.id.s_age_edit);
+            final TextView txt_address = (TextView) rootView.findViewById(R.id.s_address_edit);
+
+            ContentResolver musicResolver = getActivity().getContentResolver();
+
+            Bitmap bitmap1 = null;
+            Bitmap bitmap2 = null;
+            Bitmap bitmap3 = null;
+            Bitmap bitmap4 = null;
+
+            pic_logo = "";
+            pic_s_1 = "";
+            pic_s_2 = "";
+            pic_s_3 = "";
+
+            if(fileUri == null){
+                pic_logo = "";
+            }else{
+                bitmap1 = getBitmap(fileUri);
+                pic_logo = getStringImage(bitmap1);
+            }
+
+            if(fileUri2 == null){
+                pic_s_1 = "";
+            }else{
+                //bitmap2 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri2));
+
+                bitmap2 = getBitmap(fileUri2);
+                pic_s_1 = getStringImage(bitmap2);
+            }
+
+            if(fileUri3 == null){
+                pic_s_2 = "";
+            }else{
+                //bitmap3 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri3));
+
+                bitmap3 = getBitmap(fileUri3);
+                pic_s_2 = getStringImage(bitmap3);
+            }
+
+            if(fileUri4 == null){
+                pic_s_3 = "";
+            }else{
+                //bitmap4 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri4));
+
+                bitmap4 = getBitmap(fileUri4);
+                pic_s_3 = getStringImage(bitmap4);
+            }
+
+
+            final String create_by = uname;
+            final String cid = txt_cid.getText().toString();
+            final String fullname = txt_fullname.getText().toString();
+            final String age = txt_age.getText().toString();
+            final String address = txt_address.getText().toString();
+
+            String tag_string_req = "req_screen";
+
+            progressDialog.setMessage("กำลังบันทึกข้อมูลคัดกรอง ...");
+            showDialog();
+
+            StringRequest strReq = new StringRequest(Request.Method.POST,
+                    AppURLs.URL_Screen, new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    hideDialog();
+
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        String keyError = jObj.getString("error");
+
+                        if (keyError == "false") {
+
+                            PatientFragment fragment = PatientFragment.newInstance(uname);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction =        fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+
+                        } else {
+                            String errorMsg = jObj.getString("error_msg");
+                            Toast.makeText(getActivity(),
+                                    errorMsg, Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getActivity(),
+                            error.getMessage(), Toast.LENGTH_LONG).show();
+                    hideDialog();
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    // Post params to login url
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("tag", "screen-edit");
+                    params.put("id_edit", id_edit);
+                    params.put("cid", cid);
+                    params.put("fullname", fullname);
+                    params.put("age", age);
+                    params.put("address", address);
+                    params.put("pic_logo", pic_logo);
+                    params.put("pic_1", pic_s_1);
+                    params.put("pic_2", pic_s_2);
+                    params.put("pic_3", pic_s_3);
+
+                    return params;
+                }
+
+            };
+
+            // Adding request to  queue
+            AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+
         }
 
     }
@@ -225,6 +391,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
                         id_edit = jObj.getString("id");
                         String cid_edit = jObj.getString("cid");
                         String fullname_edit = jObj.getString("fullname");
+                        String age_edit = jObj.getString("age");
                         String address_edit = jObj.getString("address");
                         String pic_logo_edit = jObj.getString("pic_logo");
                         String pic_1_edit = jObj.getString("pic_1");
@@ -242,6 +409,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
                         cid.setText(cid_edit);
                         fullname.setText(fullname_edit);
+                        age.setText(age_edit);
                         address.setText(address_edit);
 
                         //pic_1
@@ -293,6 +461,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
         AppController.getInstance().addToRequestQueue(jreq, "json_obj_req");
     }
+
 
     private Bitmap getBitmap(Uri path) {
 

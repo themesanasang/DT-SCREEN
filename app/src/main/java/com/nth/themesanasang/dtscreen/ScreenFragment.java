@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,8 @@ import com.nth.themesanasang.dtscreen.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.widget.EditText;
+import android.text.TextWatcher;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +75,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
     private Uri fileUri, fileUri2, fileUri3, fileUri4;
     private ImageView btnCapturePicture, btnCapturePicture2, btnCapturePicture3, pic_1, pic_2, pic_3;
     Button btnSaveScreen;
+    EditText txtCode;
     private CircularImageView logo_patient;
 
     public static ScreenFragment newInstance(String username) {
@@ -114,6 +117,41 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
 
         btnSaveScreen = (Button) rootView.findViewById(R.id.btnSaveScreen);
         btnSaveScreen.setOnClickListener(new btnSaveScreen());
+
+        txtCode = (EditText) rootView.findViewById(R.id.s_cid);
+        txtCode.addTextChangedListener( new TextWatcher() {
+            boolean isEdiging;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().replace("-", ""));
+
+                if (sb.length()> 2)
+                    sb.insert(1, "-");
+                if (sb.length()> 6)
+                    sb.insert(6, "-");
+                if (sb.length()> 12)
+                    sb.insert(12, "-");
+                if (sb.length()> 15)
+                    sb.insert(15, "-");
+                if(sb.length()> 17)
+                    sb.delete(17, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
+
+
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
@@ -191,6 +229,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
 
             final TextView txt_cid = (TextView) rootView.findViewById(R.id.s_cid);
             final TextView txt_fullname = (TextView) rootView.findViewById(R.id.s_fullname);
+            final TextView txt_age = (TextView) rootView.findViewById(R.id.s_age);
             final TextView txt_address = (TextView) rootView.findViewById(R.id.s_address);
 
             ContentResolver musicResolver = getActivity().getContentResolver();
@@ -248,6 +287,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             final String create_by = uname;
             final String cid = txt_cid.getText().toString();
             final String fullname = txt_fullname.getText().toString();
+            final String age = txt_age.getText().toString();
             final String address = txt_address.getText().toString();
 
             String tag_string_req = "req_screen";
@@ -279,6 +319,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
                             logo_patient.setImageResource(R.drawable.p_user);
                             txt_cid.setText("");
                             txt_fullname.setText("");
+                            txt_age.setText("");
                             txt_address.setText("");
                             //pic_1 = null;
                             //pic_2 = null;
@@ -312,6 +353,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
                     params.put("create_by", create_by);
                     params.put("cid", cid);
                     params.put("fullname", fullname);
+                    params.put("age", age);
                     params.put("address", address);
                     params.put("pic_logo", pic_logo);
                     params.put("pic_1", pic_s_1);

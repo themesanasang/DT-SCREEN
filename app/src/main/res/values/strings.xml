@@ -22,6 +22,7 @@
     <!-- from screen -->
     <string name="txtFullname">ชื่อ-สกุล</string>
     <string name="txtCID">รหัสบัตรประชาชน</string>
+    <string name="txtAGE">อายุ</string>
     <string name="txtAddress">ที่อยู่</string>
 
 
