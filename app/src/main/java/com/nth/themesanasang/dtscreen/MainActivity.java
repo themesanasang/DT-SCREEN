@@ -142,8 +142,30 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                //Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+                searchView.clearFocus();
+
+                SearchResultFragment fragment = SearchResultFragment.newInstance(username, query);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                return false;
+            }
+        });
 
         return true;
     }

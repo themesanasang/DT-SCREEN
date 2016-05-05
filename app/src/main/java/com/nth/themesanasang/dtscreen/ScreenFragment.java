@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -316,14 +318,18 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
                             Toast.makeText(getActivity(),
                                     "บันทึกข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
 
-                            logo_patient.setImageResource(R.drawable.p_user);
+                            /*logo_patient.setImageResource(R.drawable.p_user);
                             txt_cid.setText("");
                             txt_fullname.setText("");
                             txt_age.setText("");
-                            txt_address.setText("");
-                            //pic_1 = null;
-                            //pic_2 = null;
-                            //pic_3 = null;
+                            txt_address.setText("");*/
+
+                            PatientFragment fragment = PatientFragment.newInstance(uname);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction =        fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
 
                         } else {
                             String errorMsg = jObj.getString("error_msg");

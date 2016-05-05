@@ -13,7 +13,7 @@
         android:textSize="16sp"
         android:padding="16dp"
         android:text="รายละเอียด"
-        android:background="@drawable/text_bottom_border"/>
+        android:background="@color/iron"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -145,19 +145,17 @@
                     android:id="@+id/pic_2_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:baseline="1dp" />
 
                 <ImageView
                     android:id="@+id/pic_3_edit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
 
             <LinearLayout
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

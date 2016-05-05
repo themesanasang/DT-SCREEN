@@ -15,7 +15,7 @@
             android:textSize="16sp"
             android:padding="16dp"
             android:text="คัดกรองเบื้องต้น"
-            android:background="@drawable/text_bottom_border"/>
+            android:background="@color/iron"/>
 
         <ListView
             android:id="@+id/patient_list"

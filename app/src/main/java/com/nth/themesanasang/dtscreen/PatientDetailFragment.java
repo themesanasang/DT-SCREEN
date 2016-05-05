@@ -47,7 +47,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -234,11 +235,88 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
         @Override
         public void onClick(View v) {
-            Log.d("Tag ", "Delete Data Screen ID="+id_edit);
+            Log.d("Tag ", "Delete Data Screen ID=" + id_edit);
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder
+                    .setTitle("คัดกรอง")
+                    .setMessage("คุณต้องการลบข้อมูลคัดกรอง?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteScreen();
+                        }
+                    })
+                    .setNegativeButton("ไม่", null)						//Do nothing on no
+                    .show();
         }
+    }
+
+    public void deleteScreen()
+    {
+        String tag_string_req = "req_screen_delete";
+
+            progressDialog.setMessage("กำลังลบข้อมูลคัดกรอง ...");
+            showDialog();
+
+            StringRequest strReq = new StringRequest(Request.Method.POST,
+                    AppURLs.URL_Screen, new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    hideDialog();
+
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        String keyError = jObj.getString("error");
+
+                        if (keyError == "false") {
+
+                            PatientFragment fragment = PatientFragment.newInstance(uname);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction =        fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+
+                        } else {
+                            String errorMsg = jObj.getString("error_msg");
+                            Toast.makeText(getActivity(),
+                                    errorMsg, Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getActivity(),
+                            error.getMessage(), Toast.LENGTH_LONG).show();
+                    hideDialog();
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    // Post params to login url
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("tag", "screen-delete");
+                    params.put("id_edit", id_edit);
+
+                    return params;
+                }
+
+            };
+
+            // Adding request to  queue
+            AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
 
     }
+
+
 
     class btnEditScreen implements Button.OnClickListener {
 

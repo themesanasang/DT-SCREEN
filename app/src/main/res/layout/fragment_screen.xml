@@ -12,7 +12,7 @@
         android:textSize="16sp"
         android:padding="16dp"
         android:text="คัดกรองเบื้องต้น"
-        android:background="@drawable/text_bottom_border"/>
+        android:background="@color/iron"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -138,20 +138,18 @@
                 android:id="@+id/pic_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baseline="1dp" />
+                android:baseline="1dp"/>
 
             <ImageView
                 android:id="@+id/pic_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:baseline="1dp" />
+                android:baseline="1dp"/>
 
             <ImageView
                 android:id="@+id/pic_3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
@@ -165,7 +163,7 @@
               android:id="@+id/btnSaveScreen"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
+              android:layout_marginTop="2dp"
               android:padding="12dp"
               android:textColor="@color/white"
               android:textSize="18sp"
