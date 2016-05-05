@@ -29,8 +29,8 @@
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/logo_patient_edit"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:background="@drawable/p_user"/>
 
@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:hint="@string/txtCID" />
             </android.support.design.widget.TextInputLayout>
@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:hint="@string/txtFullname" />
             </android.support.design.widget.TextInputLayout>
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="3"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:hint="@string/txtAGE" />
             </android.support.design.widget.TextInputLayout>
@@ -95,7 +95,7 @@
                     android:maxLines="5"
                     android:minLines="3"
                     android:scrollbars="vertical"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:hint="@string/txtAddress" />
             </android.support.design.widget.TextInputLayout>
@@ -139,18 +139,25 @@
                     android:id="@+id/pic_1_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:baseline="1dp" />
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_marginTop="2dp"/>
 
                 <ImageView
                     android:id="@+id/pic_2_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:baseline="1dp" />
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_marginTop="2dp"/>
 
                 <ImageView
                     android:id="@+id/pic_3_edit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_marginTop="2dp"/>
             </LinearLayout>
 
 
@@ -165,14 +172,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:text="@string/btnEdit" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnDeleteScreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:text="@string/btnDelete"
                     android:theme="@style/MyButtonDelete" />
             </LinearLayout>

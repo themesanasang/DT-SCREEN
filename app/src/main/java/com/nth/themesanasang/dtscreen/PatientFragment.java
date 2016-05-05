@@ -16,8 +16,6 @@ import android.widget.Toast;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.nth.themesanasang.dtscreen.R;
-
 
 import java.util.ArrayList;
 import java.util.Map;

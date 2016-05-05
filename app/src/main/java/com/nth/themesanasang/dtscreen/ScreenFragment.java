@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,14 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,7 +43,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.mikhaellopez.circularimageview.CircularImageView;
-import com.nth.themesanasang.dtscreen.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -249,20 +245,13 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             if(fileUri == null){
                 pic_logo = "";
             }else{
-                /*try {
-                    bitmap1 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }*/
+
                 bitmap1 = getBitmap(fileUri);
                 pic_logo = getStringImage(bitmap1);
             }
-
             if(fileUri2 == null){
                 pic_s_1 = "";
             }else{
-                //bitmap2 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri2));
-
                 bitmap2 = getBitmap(fileUri2);
                 pic_s_1 = getStringImage(bitmap2);
             }
@@ -270,8 +259,6 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             if(fileUri3 == null){
                 pic_s_2 = "";
             }else{
-                //bitmap3 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri3));
-
                 bitmap3 = getBitmap(fileUri3);
                 pic_s_2 = getStringImage(bitmap3);
             }
@@ -279,8 +266,6 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
             if(fileUri4 == null){
                 pic_s_3 = "";
             }else{
-                //bitmap4 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri4));
-
                 bitmap4 = getBitmap(fileUri4);
                 pic_s_3 = getStringImage(bitmap4);
             }

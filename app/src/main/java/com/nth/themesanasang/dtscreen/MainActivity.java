@@ -19,17 +19,13 @@ import android.view.MenuItem;
 import android.view.MenuInflater;
 import android.app.SearchManager;
 import android.content.Context;
-
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spannable;
-
-import com.nth.themesanasang.dtscreen.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.widget.Toast;
-
 import butterknife.ButterKnife;
 
 

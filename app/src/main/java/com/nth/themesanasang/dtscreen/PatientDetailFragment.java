@@ -34,7 +34,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -482,7 +481,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
                         if(decodedString1.length > 10000) {
                             logo_patient.setImageBitmap(decodedByte1);
                             logo_patient.setBorderColor(R.color.iron);
-                            logo_patient.setBorderWidth(1);
+                            logo_patient.setBorderWidth(0);
                         }
 
                         cid.setText(cid_edit);

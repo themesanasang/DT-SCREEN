@@ -5,20 +5,11 @@ package com.nth.themesanasang.dtscreen;
  */
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.nth.themesanasang.dtscreen.R;
-
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import android.graphics.Bitmap;
@@ -77,7 +68,6 @@ public class PatientAdapter extends BaseAdapter {
 
         TextView textView1 = (TextView)view.findViewById(R.id.p_cid);
         textView1.setText(mData.get(position).get("cid").toString());
-        //textView1.setText("CID: "+mData.get(position).get("cid").toString());
 
         TextView textView2 = (TextView)view.findViewById(R.id.p_name);
         textView2.setText("ชื่อ: "+mData.get(position).get("fullname").toString());

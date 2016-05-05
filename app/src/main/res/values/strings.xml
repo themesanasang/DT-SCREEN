@@ -4,6 +4,7 @@
     <string name="action_settings">settings</string>
 
     <!-- from login -->
+    <string name="txtWelcome">ยินดีตอนรับ!</string>
     <string name="txtUsername">ชื่อผู้ใช้งาน</string>
     <string name="txtPassword">รหัสผ่าน</string>
     <string name="btnLogin">เข้าสู่ระบบ</string>
