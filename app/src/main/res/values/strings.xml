@@ -26,6 +26,8 @@
     <string name="txtAGE">อายุ</string>
     <string name="txtAddress">ที่อยู่</string>
 
+    <!-- from profile -->
+    <string name="titleprofile">ข้อมูลส่วนตัว</string>
 
     <!-- Btn Save -->
     <string name="btnSave">บันทึก</string>

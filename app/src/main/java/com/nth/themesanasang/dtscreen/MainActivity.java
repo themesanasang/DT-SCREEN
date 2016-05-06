@@ -218,10 +218,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             /*case R.id.btnUploadData:
                 fragmentClass = UploadDataFragment.class;
-                break;
-            case R.id.btnProfile:
-                fragmentClass = ProfileFragment.class;
                 break;*/
+            case R.id.btnProfile:
+                mCurrentSelectedPosition = 1;
+                ProfileFragment Profile = ProfileFragment.newInstance(username);
+                transaction.replace(R.id.flContent, Profile);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
             default:
                 mCurrentSelectedPosition = 0;
                 PatientFragment DefaultFragment = PatientFragment.newInstance(username);
