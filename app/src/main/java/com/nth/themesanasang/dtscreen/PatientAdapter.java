@@ -5,6 +5,7 @@ package com.nth.themesanasang.dtscreen;
  */
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,10 @@ public class PatientAdapter extends BaseAdapter {
 
         //ImageView pic_logo = (ImageView) view.findViewById(R.id.user_icon);
         CircularImageView pic_logo = (CircularImageView)view.findViewById(R.id.user_icon);
-        pic_logo.setBorderColor(R.color.primary_blue);
-        pic_logo.setBorderWidth(1);
+        //pic_logo.setBorderColor(R.color.primary_blue);
+        pic_logo.setBorderWidth(0);
+        pic_logo.setMaxHeight(50);
+        pic_logo.setMaxWidth(50);
         /*circularImageView.addShadow();
         circularImageView.setShadowRadius(15);
         circularImageView.setShadowColor(Color.RED);*/
@@ -63,7 +66,7 @@ public class PatientAdapter extends BaseAdapter {
                 pic_logo.setImageBitmap(decodedByte);
             }
         }else{
-            pic_logo.setImageResource(R.drawable.ic_account_circle);
+            pic_logo.setImageResource(R.drawable.user_avatar_main_picture);
         }
 
         TextView textView1 = (TextView)view.findViewById(R.id.p_cid);

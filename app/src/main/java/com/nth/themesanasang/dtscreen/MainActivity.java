@@ -1,8 +1,10 @@
 package com.nth.themesanasang.dtscreen;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -25,7 +27,11 @@ import android.text.Spannable;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 
 
@@ -79,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
             username = myIntent.getStringExtra("username");
             nameFull = myIntent.getStringExtra("name");
         }
+
+        /*getSupportFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                Log.d("Msg onBackStackChanged=","kkkkkkkk");
+                supportInvalidateOptionsMenu();
+            }
+        });*/
 
         if (savedInstanceState == null) {
             navigationView.getMenu().getItem(0).setChecked(true);
@@ -205,14 +219,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnListPatient:
                 mCurrentSelectedPosition = 0;
                 PatientFragment Patient = PatientFragment.newInstance(username);
-                transaction.replace(R.id.flContent, Patient);
+                transaction.replace(R.id.flContent, Patient, "Patient");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
             case R.id.btnScreen:
                 mCurrentSelectedPosition = 1;
                 ScreenFragment Screen = ScreenFragment.newInstance(username);
-                transaction.replace(R.id.flContent, Screen);
+                transaction.replace(R.id.flContent, Screen, "Screen");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
@@ -220,16 +234,16 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = UploadDataFragment.class;
                 break;*/
             case R.id.btnProfile:
-                mCurrentSelectedPosition = 1;
+                mCurrentSelectedPosition = 2;
                 ProfileFragment Profile = ProfileFragment.newInstance(username);
-                transaction.replace(R.id.flContent, Profile);
+                transaction.replace(R.id.flContent, Profile, "Profile");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
             default:
                 mCurrentSelectedPosition = 0;
                 PatientFragment DefaultFragment = PatientFragment.newInstance(username);
-                transaction.replace(R.id.flContent, DefaultFragment);
+                transaction.replace(R.id.flContent, DefaultFragment, "Patient");
                 transaction.addToBackStack(null);
                 transaction.commit();
         }
@@ -247,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Log.d("Msg = ", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+        Log.d("Msg Stach Count = ", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
 
         if(getSupportFragmentManager().getBackStackEntryCount() == 0){
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -273,6 +287,21 @@ public class MainActivity extends AppCompatActivity {
             });
 
             dialog.show();
+        }else{
+            Menu menu = navigationView.getMenu();
+
+            if (getSupportFragmentManager().findFragmentByTag("Patient") != null){
+                Log.d("Msg b= ", "Patient" );
+                menu.getItem(0).setChecked(true);
+            }else if (getSupportFragmentManager().findFragmentByTag("Screen") != null){
+                Log.d("Msg b= ", "Screen" );
+                menu.getItem(1).setChecked(true);
+            }else if(getSupportFragmentManager().findFragmentByTag("Profile") != null){
+                Log.d("Msg b= ", "Profile" );
+                menu.getItem(2).setChecked(true);
+            }else{
+                menu.getItem(0).setChecked(true);
+            }
         }
     }
 
@@ -288,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = navigationView.getMenu();
         menu.getItem(mCurrentSelectedPosition).setChecked(true);
     }
+
 
 
     private void logoutUser() {

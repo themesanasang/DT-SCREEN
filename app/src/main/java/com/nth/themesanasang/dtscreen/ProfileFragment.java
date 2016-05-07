@@ -5,7 +5,10 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,8 +76,6 @@ public class ProfileFragment extends Fragment implements OnBackPressed {
         pr_password = (TextView) rootView.findViewById(R.id.pro_password);
         pr_address  = (TextView) rootView.findViewById(R.id.pro_address);
 
-        pr_username.setVisibility(View.INVISIBLE);
-
         return rootView;
     }
 
@@ -93,16 +94,90 @@ public class ProfileFragment extends Fragment implements OnBackPressed {
         public void onClick(View v) {
             Log.d("Tag ", "Go to function saveProfileUser");
 
-            saveProfileUser(uname);
+            String name = pr_fullname.getText().toString();
+            String pass = pr_password.getText().toString();
+            String address = pr_address.getText().toString();
+
+            if (name.trim().length() > 0 && address.trim().length() > 0){
+                saveProfileUser(uname, name, pass, address);
+            }else{
+                Snackbar.make(v, "กรุณากรอกข้อมูล!", Snackbar.LENGTH_LONG)
+                        .show();
+            }
         }
 
     }
 
 
-    public  void saveProfileUser(final String uname){
+    public  void saveProfileUser(final String uname, final String name, final String pass, final String address){
 
+        progressDialog.setMessage("กำลังแก้ไขข้อมูล ...");
+        showDialog();
 
+        String tag_string_req = "req_profile_edit";
 
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppURLs.URL_Profile, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    String keyError = jObj.getString("error");
+
+                    if (keyError == "false") {
+
+                        Toast.makeText(getActivity(),
+                                "แก้ไขข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
+
+                        PatientFragment fragment = PatientFragment.newInstance(uname);
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.flContent, fragment, "Patient");
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                    } else {
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getActivity(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Post params to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("tag", "profile-edit");
+                params.put("username", uname);
+                params.put("name", name);
+                params.put("password", pass);
+                params.put("address", address);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to  queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+
+        hideDialog();
     }
 
 

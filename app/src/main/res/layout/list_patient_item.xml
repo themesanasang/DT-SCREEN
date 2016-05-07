@@ -12,7 +12,7 @@
         android:layout_marginTop="8dp"
         android:paddingTop="8dp"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/ic_account_circle"/>
+        android:src="@drawable/user_avatar_main_picture"/>
 
     <com.nth.themesanasang.dtscreen.CustomTextView
         android:id="@+id/titleCID"

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -273,8 +274,8 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
 
                             PatientFragment fragment = PatientFragment.newInstance(uname);
                             FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction =        fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.flContent, fragment);
+                            FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment, "Patient");
                             fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
 
@@ -328,126 +329,133 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
             final TextView txt_age = (TextView) rootView.findViewById(R.id.s_age_edit);
             final TextView txt_address = (TextView) rootView.findViewById(R.id.s_address_edit);
 
-            ContentResolver musicResolver = getActivity().getContentResolver();
+            if (txt_cid.getText().toString().trim().length() > 0 && txt_fullname.getText().toString().trim().length() > 0 && txt_age.getText().toString().trim().length() > 0){
 
-            Bitmap bitmap1 = null;
-            Bitmap bitmap2 = null;
-            Bitmap bitmap3 = null;
-            Bitmap bitmap4 = null;
+                ContentResolver musicResolver = getActivity().getContentResolver();
 
-            pic_logo = "";
-            pic_s_1 = "";
-            pic_s_2 = "";
-            pic_s_3 = "";
+                Bitmap bitmap1 = null;
+                Bitmap bitmap2 = null;
+                Bitmap bitmap3 = null;
+                Bitmap bitmap4 = null;
 
-            if(fileUri == null){
                 pic_logo = "";
-            }else{
-                bitmap1 = getBitmap(fileUri);
-                pic_logo = getStringImage(bitmap1);
-            }
-
-            if(fileUri2 == null){
                 pic_s_1 = "";
-            }else{
-                //bitmap2 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri2));
-
-                bitmap2 = getBitmap(fileUri2);
-                pic_s_1 = getStringImage(bitmap2);
-            }
-
-            if(fileUri3 == null){
                 pic_s_2 = "";
-            }else{
-                //bitmap3 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri3));
-
-                bitmap3 = getBitmap(fileUri3);
-                pic_s_2 = getStringImage(bitmap3);
-            }
-
-            if(fileUri4 == null){
                 pic_s_3 = "";
-            }else{
-                //bitmap4 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri4));
 
-                bitmap4 = getBitmap(fileUri4);
-                pic_s_3 = getStringImage(bitmap4);
-            }
+                if(fileUri == null){
+                    pic_logo = "";
+                }else{
+                    bitmap1 = getBitmap(fileUri);
+                    pic_logo = getStringImage(bitmap1);
+                }
+
+                if(fileUri2 == null){
+                    pic_s_1 = "";
+                }else{
+                    //bitmap2 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri2));
+
+                    bitmap2 = getBitmap(fileUri2);
+                    pic_s_1 = getStringImage(bitmap2);
+                }
+
+                if(fileUri3 == null){
+                    pic_s_2 = "";
+                }else{
+                    //bitmap3 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri3));
+
+                    bitmap3 = getBitmap(fileUri3);
+                    pic_s_2 = getStringImage(bitmap3);
+                }
+
+                if(fileUri4 == null){
+                    pic_s_3 = "";
+                }else{
+                    //bitmap4 = BitmapFactory.decodeStream(musicResolver.openInputStream(fileUri4));
+
+                    bitmap4 = getBitmap(fileUri4);
+                    pic_s_3 = getStringImage(bitmap4);
+                }
 
 
-            final String create_by = uname;
-            final String cid = txt_cid.getText().toString();
-            final String fullname = txt_fullname.getText().toString();
-            final String age = txt_age.getText().toString();
-            final String address = txt_address.getText().toString();
+                final String create_by = uname;
+                final String cid = txt_cid.getText().toString();
+                final String fullname = txt_fullname.getText().toString();
+                final String age = txt_age.getText().toString();
+                final String address = txt_address.getText().toString();
 
-            String tag_string_req = "req_screen";
+                String tag_string_req = "req_screen";
 
-            progressDialog.setMessage("กำลังบันทึกข้อมูลคัดกรอง ...");
-            showDialog();
+                progressDialog.setMessage("กำลังบันทึกข้อมูลคัดกรอง ...");
+                showDialog();
 
-            StringRequest strReq = new StringRequest(Request.Method.POST,
-                    AppURLs.URL_Screen, new Response.Listener<String>() {
+                StringRequest strReq = new StringRequest(Request.Method.POST,
+                        AppURLs.URL_Screen, new Response.Listener<String>() {
 
-                @Override
-                public void onResponse(String response) {
-                    hideDialog();
+                    @Override
+                    public void onResponse(String response) {
+                        hideDialog();
 
-                    try {
-                        JSONObject jObj = new JSONObject(response);
-                        String keyError = jObj.getString("error");
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            String keyError = jObj.getString("error");
 
-                        if (keyError == "false") {
+                            if (keyError == "false") {
 
-                            PatientFragment fragment = PatientFragment.newInstance(uname);
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction =        fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.flContent, fragment);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
+                                PatientFragment fragment = PatientFragment.newInstance(uname);
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.flContent, fragment, "Patient");
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
 
-                        } else {
-                            String errorMsg = jObj.getString("error_msg");
-                            Toast.makeText(getActivity(),
-                                    errorMsg, Toast.LENGTH_LONG).show();
+                            } else {
+                                String errorMsg = jObj.getString("error_msg");
+                                Toast.makeText(getActivity(),
+                                        errorMsg, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),
+                                error.getMessage(), Toast.LENGTH_LONG).show();
+                        hideDialog();
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() {
+                        // Post params to login url
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("tag", "screen-edit");
+                        params.put("id_edit", id_edit);
+                        params.put("cid", cid);
+                        params.put("fullname", fullname);
+                        params.put("age", age);
+                        params.put("address", address);
+                        params.put("pic_logo", pic_logo);
+                        params.put("pic_1", pic_s_1);
+                        params.put("pic_2", pic_s_2);
+                        params.put("pic_3", pic_s_3);
+
+                        return params;
                     }
 
-                }
-            }, new Response.ErrorListener() {
+                };
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity(),
-                            error.getMessage(), Toast.LENGTH_LONG).show();
-                    hideDialog();
-                }
-            }) {
+                // Adding request to  queue
+                AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
 
-                @Override
-                protected Map<String, String> getParams() {
-                    // Post params to login url
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("tag", "screen-edit");
-                    params.put("id_edit", id_edit);
-                    params.put("cid", cid);
-                    params.put("fullname", fullname);
-                    params.put("age", age);
-                    params.put("address", address);
-                    params.put("pic_logo", pic_logo);
-                    params.put("pic_1", pic_s_1);
-                    params.put("pic_2", pic_s_2);
-                    params.put("pic_3", pic_s_3);
-
-                    return params;
-                }
-
-            };
-
-            // Adding request to  queue
-            AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+            }else{
+                Snackbar.make(v, "กรุณากรอกข้อมูล!", Snackbar.LENGTH_LONG)
+                        .show();
+            }
 
         }
 

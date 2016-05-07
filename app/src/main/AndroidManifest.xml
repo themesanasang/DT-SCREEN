@@ -14,6 +14,7 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
 
         <activity android:name="com.nth.themesanasang.dtscreen.SplashScreenActivity">
@@ -22,21 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.nth.themesanasang.dtscreen.LoginActivity"
-            android:label="Login" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.nth.themesanasang.dtscreen.MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name="com.nth.themesanasang.dtscreen.LoginActivity"></activity>
+        <activity android:name="com.nth.themesanasang.dtscreen.MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />

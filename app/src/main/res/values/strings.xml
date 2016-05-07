@@ -17,10 +17,12 @@
     <string name="search_result">ผลการค้นหา</string>
 
     <!-- from list patient screen -->
+    <string name="titlePatientList">รายการคัดกรอง</string>
     <string name="listCID">รหัสบัตรประชาชน: </string>
     <string name="listRegdate">วันที่คัดกรอง: </string>
 
     <!-- from screen -->
+    <string name="titleScreen">คัดกรองเบื้องต้น</string>
     <string name="txtFullname">ชื่อ-สกุล</string>
     <string name="txtCID">รหัสบัตรประชาชน</string>
     <string name="txtAGE">อายุ</string>
@@ -28,6 +30,7 @@
 
     <!-- from profile -->
     <string name="titleprofile">ข้อมูลส่วนตัว</string>
+    <string name="txtUserProfile">คุณ: </string>
 
     <!-- Btn Save -->
     <string name="btnSave">บันทึก</string>

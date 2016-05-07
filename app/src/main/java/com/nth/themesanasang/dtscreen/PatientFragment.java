@@ -79,8 +79,8 @@ public class PatientFragment extends Fragment implements OnBackPressed {
 
                 PatientDetailFragment fragment2 = PatientDetailFragment.newInstance(uname,cid,day);
                 FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction =        fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, fragment2);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, fragment2, "Patient");
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
