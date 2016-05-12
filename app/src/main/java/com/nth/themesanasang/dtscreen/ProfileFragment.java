@@ -132,10 +132,10 @@ public class ProfileFragment extends Fragment implements OnBackPressed {
                         Toast.makeText(getActivity(),
                                 "แก้ไขข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
 
-                        PatientFragment fragment = PatientFragment.newInstance(uname);
+                        ProfileFragment fragment = ProfileFragment.newInstance(uname);
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.flContent, fragment, "Patient");
+                        fragmentTransaction.replace(R.id.flContent, fragment, "Profile");
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
 

@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:scaleType="fitCenter"
         android:src="@drawable/logo_dtscreen_2x"/>
 
 </RelativeLayout>

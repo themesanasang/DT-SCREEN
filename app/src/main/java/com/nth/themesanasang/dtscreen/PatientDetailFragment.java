@@ -554,7 +554,7 @@ public class PatientDetailFragment extends Fragment implements OnBackPressed  {
         InputStream in = null;
         try {
             ContentResolver mContentResolver = getActivity().getContentResolver();
-            final int IMAGE_MAX_SIZE = 500000000;
+            final int IMAGE_MAX_SIZE = 300000000;
             in = mContentResolver.openInputStream(uri);
 
             // Decode image size

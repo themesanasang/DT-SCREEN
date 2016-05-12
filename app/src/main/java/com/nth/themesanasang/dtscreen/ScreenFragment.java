@@ -379,7 +379,7 @@ public class ScreenFragment extends Fragment implements OnBackPressed {
         try {
             ContentResolver mContentResolver = getActivity().getContentResolver();
             //500000000 ได้
-            final int IMAGE_MAX_SIZE = 500000000;
+            final int IMAGE_MAX_SIZE = 300000000;
             in = mContentResolver.openInputStream(uri);
 
             // Decode image size

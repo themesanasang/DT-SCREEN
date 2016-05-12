@@ -9,8 +9,7 @@
         android:id="@+id/user_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:paddingTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_alignParentLeft="true"
         android:src="@drawable/user_avatar_main_picture"/>
 
@@ -21,7 +20,7 @@
         android:layout_alignTop="@+id/user_icon"
         android:layout_toRightOf="@+id/user_icon"
         android:textSize="12sp"
-        android:paddingTop="8dp"
+        android:paddingTop="0dp"
         android:paddingLeft="16dp"
         android:text="@string/listCID"
         android:textColor="@color/black"/>
@@ -33,8 +32,8 @@
         android:layout_alignTop="@+id/user_icon"
         android:layout_toRightOf="@+id/user_icon"
         android:textSize="12sp"
-        android:paddingTop="8dp"
-        android:paddingLeft="115dp"
+        android:paddingTop="0dp"
+        android:paddingLeft="140dp"
         android:textColor="@color/red" />
 
     <com.nth.themesanasang.dtscreen.CustomTextView
@@ -56,7 +55,7 @@
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/user_icon"
         android:textSize="12sp"
-        android:paddingLeft="16dp"
+        android:paddingLeft="18dp"
         android:text="@string/listRegdate"
         android:textColor="@color/black"/>
 
@@ -68,7 +67,7 @@
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/user_icon"
         android:textSize="12sp"
-        android:paddingLeft="86dp"
+        android:paddingLeft="110dp"
         android:textColor="@color/black"/>
 
     <com.nth.themesanasang.dtscreen.CustomTextView
